@@ -1,5 +1,5 @@
 # DIGITAL BIOMETRIC READER
 
-Antonio
-Luan
-Rafael
+Antonio  
+Luan  
+Rafael  

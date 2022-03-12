@@ -1,5 +1,7 @@
 package com.impacta.iot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
+	public List<UserResponseVO> findAll() {
+		List<User> users = repository.findAll();
+
+		return users.stream().map(user -> entityToResponseVOConverter(user, new UserResponseVO())).toList();
+	}
+
 	public UserResponseVO findById(Long id) {
 
 		User login = repository.findById(id)
@@ -29,20 +37,20 @@ public class UserService {
 		return entityToResponseVOConverter(repository.save(entity), new UserResponseVO());
 	}
 
-	private UserResponseVO entityToResponseVOConverter(User login, UserResponseVO response) {
+	private UserResponseVO entityToResponseVOConverter(User user, UserResponseVO response) {
 
-		response.setId(login.getId());
-		response.setName(login.getName());
-		response.setFingerprint(login.getFingerprint());
+		response.setId(user.getId());
+		response.setName(user.getName());
+		response.setFingerprint(user.getFingerprint());
 
 		return response;
 	}
 
-	private User getEntityFromVO(UserRequestVO request, User login) {
+	private User getEntityFromVO(UserRequestVO request, User user) {
 
-		login.setFingerprint(request.getFingerprint());
-		login.setName(request.getName());
+		user.setFingerprint(request.getFingerprint());
+		user.setName(request.getName());
 
-		return login;
+		return user;
 	}
 }

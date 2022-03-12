@@ -1,5 +1,7 @@
 package com.impacta.iot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +21,18 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@GetMapping
+	public List<UserResponseVO> findAllUsers() {
+		return service.findAll();
+	}
+	
 	@GetMapping("/{id}")
-	public UserResponseVO findLoginById(@PathVariable Long id) {
+	public UserResponseVO findUserById(@PathVariable Long id) {
 		return service.findById(id);
 	}
 	
 	@PostMapping
-	public UserResponseVO saveLogin(@RequestBody UserRequestVO request) {
+	public UserResponseVO saveUser(@RequestBody UserRequestVO request) {
 		return service.save(request);
 	}
 }
